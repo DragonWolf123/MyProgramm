@@ -1,8 +1,13 @@
+print('Загрузка библитеки asyncio')
 import asyncio
 from asyncio import sleep
+print('Загрузка библитеки os')
 import os
+print('Загрузка библитеки progressbar')
 import progressbar
+print('Загрузка библитеки time')
 import time
+print('Загрузка библитеки tkinter')
 import tkinter
 from tkinter import *
 from tkinter import filedialog as fd
@@ -14,22 +19,41 @@ from tkinter import scrolledtext
 from tkinter import ttk
 from tkinter import Tk, BOTH
 from tkinter.ttk import Frame, Label
+print('Загрузка библитеки random')
 import random
+print('Загрузка библитеки typing')
 from typing import Collection
+print('Загрузка библитеки flask')
 import flask
+print('Загрузка библитеки requests')
 from requests import get
+print('Загрузка библитеки threading')
 from threading import Thread
+print('Загрузка библитеки pillow')
 from PIL import Image, ImageDraw, ImageFont, ImageTk
+print('Загрузка библитеки sys')
 import sys
 from sys import argv
+print('Загрузка библитеки pyttsx3')
 import pyttsx3 as pt
+print('Загрузка библитеки gtts')
 from gtts import gTTS
+print('Загрузка библитеки tqdm')
 from tqdm import tqdm as bar
+print('Загрузка библитеки pynput')
 import pynput
 from pynput.keyboard import Key, Listener
+print('Загрузка библитеки pyglet')
 import pyglet
+print('Загрузка библитеки youtube_dl')
 import youtube_dl
+print('Загрузка библитеки platform')
 import platform
+print('Загрузка библитеки win10toast')
+import win10toast
+from win10toast import ToastNotifier
+print('Загрузка библитек завершена!')
+print('Загрузка ресурсов...')
 
 nameacc = 'USER'
 
@@ -416,18 +440,25 @@ def ytdownloader():
             ydl.download([yturl])
             messagebox.showwarning(f'YT Downloader by DragonWolf', f'Была скачана музыка по URL: { yturl }')
 
-        ydl_optst = {
+def ytdownloader1():
+    if nameacc == 'TEMPUSER':
+        while True:
+            messagebox.showerror(f'Ошибка реестра', f'Невозможно запустить "Скачать музыку с YouTube" из-за неправильного ключа "key"')
+    else:
+        yturl1 = input(f'URL: ')
+    
+        ydl_opts1 = {
             'format' : 'bestvideo/best',
             'postprocessors' : [{
                 'key' : 'FFmpegExtractAudio',
-                'preferredcodec' : 'mp3',
+                'preferredcodec' : 'mp4',
                 'preferredquality' : '128'
             }],
         }
 
-        with youtube_dl.YoutubeDL(ydl_optst) as ydlt:
-            ydlt.download([yturl])
-            messagebox.showwarning(f'YT Downloader by DragonWolf', f'Было скачано видео по URL: { yturl }')
+        with youtube_dl.YoutubeDL(ydl_opts1) as ydl:
+            ydl.download([yturl1])
+            messagebox.showwarning(f'YT Downloader by DragonWolf', f'Была скачана музыка по URL: { yturl1 }')
 
 def fullson():
     root.attributes('-fullscreen', True)
@@ -444,11 +475,16 @@ def toolswon():
 def toolswoff():
 	root.wm_attributes('-toolwindow', False)
 
-def create_service():
-	os.system('sc \api create fwapis description="Service api for Programm By DragonWolf" binpath = "D:\"')
+def toast():
+	title = input(f'Title: ')
+	descriptiont = input(f'Описание: ')
+	iconfilet = input(f'Путь к иконке: ')
+	toastuser = ToastNotifier()
+	toastuser.show_toast(f'{ title }', f'{ descriptiont }', icon_path = f'{ iconfilet }', duration = 3)
 
-def remove_service():
-	os.system('sc delete fwapis')
+def create_session():
+	messagebox.showwarning('Создание сессий - Предупреждение', 'После создания сессий эта сессия не будет работать')
+	os.system('app.py')
 
 mainmenu = Menu(root)
 root.config(menu = mainmenu)
@@ -461,6 +497,8 @@ messagesapi = Menu(mainmenu, tearoff = 0)
 elements = Menu(mainmenu, tearoff = 0)
 filemanager = Menu(mainmenu, tearoff = 0)
 sysmenu = Menu(mainmenu, tearoff = 0)
+sesmenu = Menu(mainmenu, tearoff = 0)
+
 
 filemenu.add_command(label = "--------------------------Файл------------------------", activebackground = 'black')
 filemenu.add_command(label = "Открыть", command = open_file, activebackground = 'black')
@@ -489,14 +527,15 @@ helpmenu.add_command(label = "Инфо о программе", command = message
 helpmenu.add_command(label = "-----------------------------------------------------", activebackground = 'black')
 
 programmmenu.add_command(label = "-----------------Программы-----------------", activebackground = 'black')
+programmmenu.add_cascade(label = "Файловый менеджер", menu = filemanager, activebackground = 'black')
+programmmenu.add_cascade(label = "Сессий", menu = sesmenu, activebackground = 'black')
+programmmenu.add_cascade(label = "Сообщения", menu = messagesapi, activebackground = 'black')
+programmmenu.add_separator()
 programmmenu.add_command(label = "Склеивание текста", command = plustext, activebackground = 'black')
 programmmenu.add_command(label = "Консоль", command = console, activebackground = 'black')
 programmmenu.add_command(label = "Генератор паролей", command = passgenerate, activebackground = 'black')
 programmmenu.add_command(label = "Проверка компютера под нагрузкой", command = programmcrasher, activebackground = 'black')
 programmmenu.add_command(label = "Выйти из программы", command = exitapi, activebackground = 'black')
-programmmenu.add_separator()
-programmmenu.add_cascade(label = "Файловый менеджер", menu = filemanager, activebackground = 'black')
-programmmenu.add_separator()
 programmmenu.add_command(label = "Выполнить команду", command = runsys, activebackground = 'black')
 programmmenu.add_command(label = "Просмотр файлов в папке", command = checkfolder, activebackground = 'black')
 programmmenu.add_command(label = "Проверить права", command = checkperms, activebackground = 'black')
@@ -505,12 +544,14 @@ programmmenu.add_command(label = "ID Процесса программы", comma
 programmmenu.add_command(label = "Бесконечная генерация", command = infinitygenerate, activebackground = 'black')
 programmmenu.add_command(label = "Воспроизвести музыку", command = playsound, activebackground = 'black')
 programmmenu.add_command(label = "Скачать аудио с YouTube", command = ytdownloader, activebackground = 'black')
+programmmenu.add_command(label = "Скачать видео с YouTube", command = ytdownloader1, activebackground = 'black')
 programmmenu.add_command(label = "------------------------------------------------", activebackground = 'black')
 
 messagesapi.add_command(label = "----------------------Сообщения-----------------", activebackground = 'black')
 messagesapi.add_command(label = "Вывести сообщение в ERROR", command = texterror, activebackground = 'black')
 messagesapi.add_command(label = "Вывести сообщение в WARNING", command = textwarning, activebackground = 'black')
 messagesapi.add_command(label = "Вывести сообщение в INFO", command = textinfo, activebackground = 'black')
+messagesapi.add_command(label = "Вывести сообщение в TOAST", command = toast, activebackground = 'black')
 messagesapi.add_command(label = "----------------------------------------------------", activebackground = 'black')
 
 elements.add_command(label = "-------------------EDIT ELEMENTS API----------------", activebackground = 'black')
@@ -528,9 +569,12 @@ filemanager.add_command(label = "Записать в файл", command = filewh
 filemanager.add_command(label = "------------------------------------------------------", activebackground = 'black')
 
 sysmenu.add_command(label = "-------------------Меню Системы---------------------", activebackground = 'black')
-sysmenu.add_command(label = "Создать службу программы", command = create_service, activebackground = 'black')
-sysmenu.add_command(label = "Удалить службу программы", command = remove_service, activebackground = 'black')
+sysmenu.add_command(label = "Тут ничего нет", activebackground = 'black')
 sysmenu.add_command(label = "----------------------------------------------------", activebackground = 'black')
+
+sesmenu.add_command(label = "-------------------Меню Сессий----------------------", activebackground = 'black')
+sesmenu.add_command(label = "Создать сессию", command = create_session, activebackground = 'black')
+sesmenu.add_command(label = "----------------------------------------------------", activebackground = 'black')
 
 mainmenu.add_cascade(label = "Файл", menu = filemenu)
 mainmenu.add_cascade(label = "Настройки", menu = settings)
@@ -549,5 +593,7 @@ textm1.grid(column=0, row=1)
 
 infobutton = Button(text="Инфо о программе", command = message, bg = 'black', fg = 'white', activebackground = 'green')  
 infobutton.grid(column=0, row=3)
+
+print('Загрузка программы')
 
 root.mainloop()
